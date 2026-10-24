@@ -2,11 +2,13 @@ import json
 import math
 
 from stream_ciphers.secure_bank.salsa20 import Salsa20, split_transaction, s_encrypt
+from Crypto.Cipher import DES
 
+cipher = DES.new(bytes.fromhex('494f54444556ffff'), DES.MODE_ECB)
+text = cipher.decrypt(bytes.fromhex('74eb40cf03b84d0bc4cd2c6e0fe97fb4e70546d3e09c530d35b344e530351bac')).decode(
+        'utf-16')
 
-for i in range(2**56):
-
-
+print(text)
 # ==================== Secure bank ====================
 # print(s_encrypt(
 #     '7ee91c2f736b015bc9edc3fd282623a0cac9c8370f6228f5822440b0c504ddefe9d09d89697a473b41bb77414ddb4d8bc367b6767f', 99))
