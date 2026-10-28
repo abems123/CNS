@@ -1,6 +1,7 @@
 import hashlib
 import json
 import pickle
+import random
 import time
 from datetime import datetime
 
@@ -14,48 +15,39 @@ def canonicalize(payment):
     ).encode("utf-8")
 
 
-def random_name(i):
-    i1 = i // 26
-    i2 = i // (26 * 26)
-    i3 = i // (26 * 26 * 26)
-    i4 = i // (26 * 26 * 26 * 26)
-    i5 = i // (26 * 26 * 26 * 26 * 26)
+# def random_name(i):
+#     i1 = i // 26
+#     i2 = i // (26 * 26)
+#     i3 = i // (26 * 26 * 26)
+#     i4 = i // (26 * 26 * 26 * 26)
+#     i5 = i // (26 * 26 * 26 * 26 * 26)
+#
+#     return chr(97 + (i % 26)) + chr(97 + (i1 % 26)) + chr(97 + (i2 % 26)) + chr(97 + (i3 % 26)) + chr(
+#         97 + (i4 % 26)) + chr(97 + (i5 % 26))
 
-    return chr(97 + (i % 26)) + chr(97 + (i1 % 26)) + chr(97 + (i2 % 26)) + chr(97 + (i3 % 26)) + chr(
-        97 + (i4 % 26)) + chr(97 + (i5 % 26))
 
+date = '2026-10-28T11:53:11.089808+00:00'
 
-date = '2026-10-27T16:29:09.630024+00:00'
+hashes = []
 
-p = {'reference': 'resafdaf',
-     'from_account': 'SIM-' + random_name(0),
-     'to_account': 'SIM-bob',
-     'amount': 10,
-     'currency': 'EUR',
-     'timestamp': date
-     }
-
-m = hashlib.sha256(canonicalize(p))
-first_hex = m.hexdigest()
 
 found = False
-i = 0
-while not found and i < 26 ** 6:
-    name = random_name(i)
+for i in range(0, 2 ** 16):
     p = {'reference': 'resafdaf',
-         'from_account': 'SIM-' + random_name(i),
-         'to_account': 'SIM-bob',
+         'from_account': 'SIM-alice',
+         'to_account': 'SIM-'+str(i),
          'amount': 10,
          'currency': 'EUR',
          'timestamp': date
          }
-    m = hashlib.sha256(canonicalize(p))
-    i += 1
-    new = m.hexdigest()
-    if name != 'aaaaaa' and new[0:7] == first_hex[0:7]:
-        print('corresponding name to aaaa:', name)
-        found = True
+    new = hashlib.sha256(canonicalize(p)).hexdigest()[0:8]
+
+    if new in hashes:
+        print('i:', i)
+        print('h:', hashes.index(new))
         break
+
+    hashes.append(new)
 
 # print(m.hexdigest())
 # print(canonicalize(p).hex())
