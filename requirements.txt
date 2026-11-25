@@ -1,1 +1,4 @@
-pycryptodome
+pycryptodome~=4.1.0
+
+sympy~=1.14.0
+owiener~=1.0.10
