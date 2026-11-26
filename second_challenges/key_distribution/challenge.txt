@@ -1,0 +1,10 @@
+Alice wants to send Bob a secret, but they’ve never met. Luckily, the company runs a public key directory: everyone registers their ElGamal public key under their name, and Alice simply looks up Bob’s entry before encrypting.
+
+The directory is open for everyone to use. Alice is happy to send her secret to anyone listed in it. Can you read what she sends to Bob?
+
+Target: http://cns-test.idlab.uantwerpen.be:50011
+
+GET /params returns the public parameters p and g GET /directory lists all registered names and their public keys POST /directory with JSON {"name": ..., "y": ...} registers a public key GET /send?to=<name> makes Alice encrypt her secret to the key listed under <name>
+
+The secret is encoded as m = int.from_bytes(secret, "big")
+

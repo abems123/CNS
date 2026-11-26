@@ -21,3 +21,6 @@ if d:
     print(flag)
 else:
     print("Wiener's Attack failed.")
+
+print(89* pow(3,-1,91) % 91)
+# print(86*(3**5) % 91)

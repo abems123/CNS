@@ -1,7 +1,3 @@
-import json
-import math
-
-from stream_ciphers.secure_bank.salsa20 import Salsa20, split_transaction, s_encrypt
 from Crypto.Cipher import DES
 
 cipher = DES.new(bytes.fromhex('494f54444556ffff'), DES.MODE_ECB)
@@ -74,8 +70,6 @@ print(text)
 # ).encode()
 # print(plaintext.hex())
 
-
-from stream_ciphers.secure_bank.salsa20 import *
 
 # ================= replanting =================
 # print(decrypt(bytes.fromhex('12296eef9eece6b42dd2bf90aa63b6d21a7cc98b95c78b4b01d833d628a941b82fb65176b4ed3c3f64'), 3430008))
